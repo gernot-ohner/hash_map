@@ -17,7 +17,7 @@ TEST_CASE("Can get size of an empty hashmap") { // in elements
 TEST_CASE("Can add a pair of numbers to the hashmap") {
     HashMap h{};
 
-    h.add({ 1, 10});
+    h.add( 1, 10);
 
     REQUIRE(h.size() == 1);
 }
@@ -26,7 +26,7 @@ TEST_CASE("Can add a pair of numbers to the hashmap") {
 TEST_CASE("Can retrieve a previously added number") {
     // given
     HashMap h{};
-    h.add({ 1, 10});
+    h.add(1, 10);
 
     //when
     auto item = h.get(1);
@@ -38,8 +38,8 @@ TEST_CASE("Can retrieve a previously added number") {
 TEST_CASE("Can get a previously added number for which there has been a key collision") {
     // given
     HashMap h{};
-    h.add({ 1, 10});
-    h.add({ 11, 20});
+    h.add(1, 10);
+    h.add(11, 20);
 
     //when
     auto item = h.get(1);
@@ -51,8 +51,8 @@ TEST_CASE("Can get a previously added number for which there has been a key coll
 TEST_CASE("Can retrieve all keys in HashMap") {
     // given
     HashMap h{};
-    h.add({ 1, 10});
-    h.add({ 2, 10});
+    h.add(1, 10);
+    h.add(2, 10);
     std::set<int> expected { 1, 2 };
 
     //when

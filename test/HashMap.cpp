@@ -9,34 +9,35 @@
 HashMap::HashMap() {
     for (int i = 0; i < INITIAL_SIZE; ++i) {
         valuesVector.emplace_back(
-                std::make_unique<std::list<std::pair<int, int>>>(
-                        std::list<std::pair<int, int>>(1)
+                std::make_unique<std::list<Entry>>(
+                        std::list<Entry>(1)
                 )
         );
     }
 }
 
-void HashMap::add(std::pair<int, int> key_value) {
-    keyVector.push_back(key_value.first);
-    keySet.insert(key_value.first);
-    valuesVector.at(1)->push_back(key_value);
+void HashMap::add(int key, int value) {
+    keySet.insert(key);
+    valuesVector.at(1)->emplace_back(
+            Entry{.key = key, .value = value}
+    );
     num_of_entries++;
 }
 
 std::set<int> HashMap::keys() const { return keySet; }
 
-int HashMap::size() const { return num_of_entries; }
+int HashMap::size() const noexcept { return num_of_entries; }
 
 int HashMap::get(int key) const {
     return std::find_if(
             (*valuesVector.at(hash(key))).begin(),
             (*valuesVector.at(hash(key))).end(),
-            [&key](std::pair<int, int> a) { return a.first == key; })
-            ->second;
+            [&key](Entry e) { return e.key == key; })
+            ->value;
 }
 
 // private
-int HashMap::hash(int value) {
+int HashMap::hash(int value) noexcept {
     return value % 10;
 }
 

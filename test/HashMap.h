@@ -12,28 +12,35 @@
 #include <list>
 #include <memory>
 
-typedef std::vector<std::unique_ptr<std::list<std::pair<int, int>>>> values_t;
+
+struct Entry {
+    int key;
+    int value;
+};
+
+//typedef std::pair<int, int> entry_t;
+typedef std::vector<std::unique_ptr<std::list<Entry>>> values_t;
+
 
 class HashMap {
 public:
     HashMap();
 
-    void add(std::pair<int, int> key_value);
+    void add(int key, int value);
 
-    [[nodiscard]] int size() const;
+    [[nodiscard]] int size() const noexcept;
 
     [[nodiscard]] int get(int key) const;
 
     [[nodiscard]] std::set<int> keys() const;
 
 private:
-    static int hash(int value);
+    static int hash(int value) noexcept;
 
 private:
     static constexpr int INITIAL_SIZE = 10;
     int num_of_entries = 0;
     std::set<int> keySet;
-    std::vector<int> keyVector = std::vector<int>(10);
     values_t valuesVector;
 };
 
